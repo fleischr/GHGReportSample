@@ -10,6 +10,7 @@
     "express": "^4"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/openapi-generator": "^3.12.0",
     "sqlite3": "^5.0.4"
   },
   "scripts": {

@@ -12,13 +12,21 @@ entity CarbonEmissions : managed {
     GHGOrgID :  String;
 }
 
-/*entity CarbonOffset : managed {
-    key ID : Integer;
+entity CarbonOffset : managed {
+    key InternalOffsetID : Integer;
+    isRetired : Boolean;
+    isForward : Boolean;
+    NetworkID : String;
+    OffsetAmount : Decimal(18, 9);
+    UnitOfMeasure : String;
 }
 
-entity AtomicCarbonOffset : managed {
-    key ID : Integer;
-}*/
+entity AtomicCarbonRetirement : managed {
+    key ACRID : Integer;
+    NetworkID : String;
+    OffsetAmount : Decimal(18, 9);
+    UnitOfMeasure : String;
+}
 
 entity GHGOrganization : managed {
     key GHGOrganizationID : String;
@@ -28,21 +36,17 @@ entity GHGOrganization : managed {
     emissions : Association to CarbonEmissions on emissions.GHGOrgID = GHGOrganizationID;
 }
 
-/*
-entity GHGSummary {
-
-}
-
 entity GHGVerifier : managed {
     key VerifierID : String;
     Description : String;
     ContactID : String;
+    Contact : Association to GHGContact on Contact.ContactID = ContactID;
 }
 
-GHGContact : managed {
+entity GHGContact : managed {
     key ContactID : String;
     DID : String;
     Name : String;
     Email : String;
     PhoneNumber : String;
-}*/
+}
