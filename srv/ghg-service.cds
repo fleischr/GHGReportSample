@@ -1,7 +1,9 @@
 using { ghgcds.sample as ghgdata } from '../db/schema';
 service GHGService @(path:'/emissionsdata') {
-    @readonly entity CarbonEmissions as select from ghgdata.CarbonEmissions{*};
-    @readonly entity GHGOrganization as select from ghgdata.GHGOrganization{*};
+    entity CarbonEmissions as select from ghgdata.CarbonEmissions{*};
+    entity GHGOrganization as select from ghgdata.GHGOrganization{*};
+    entity GHGVerifier as select from ghgdata.GHGVerifier{*};
+    entity GHGContact as select from ghgdata.GHGContact{*};
     @requires: 'authenticated-user'
     action verifyEmissions(emissions: CarbonEmissions:ID, scope: Integer);
 

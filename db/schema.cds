@@ -21,6 +21,7 @@ entity CarbonOffset : managed {
     UnitOfMeasure : String;
 }
 
+//need to relate retirement to emissions data correctly
 entity AtomicCarbonRetirement : managed {
     key ACRID : Integer;
     NetworkID : String;

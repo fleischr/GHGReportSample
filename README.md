@@ -1,8 +1,8 @@
 # GHG Reporting Template - SAP BTP CAP app
 
-Welcome to the project!
+This app demonstrates a very basic carbon accounting data model for GHG (Greenhouse Gas) Inventory Reporting using CAPM CDS (Cloud Application Programmaing Model - Core Data Services) on SAP BTP.
 
-This app 
+It's meant to simulate what I think is a to-be state of the SAP GreenLedger
 
 File or Folder | Purpose
 ---------|----------
