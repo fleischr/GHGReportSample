@@ -12,6 +12,7 @@ entity CarbonEmissions : managed {
     GHGOrgID :  String;
 }
 
+//need to fill out more fields here
 entity CarbonOffset : managed {
     key InternalOffsetID : Integer;
     isRetired : Boolean;
@@ -42,6 +43,8 @@ entity GHGVerifier : managed {
     Description : String;
     ContactID : String;
     Contact : Association to GHGContact on Contact.ContactID = ContactID;
+    VerifyingOrgID : String;
+    VerifyingOrg: Association to GHGOrganization on VerifyingOrg.GHGOrganizationID = VerifyingOrgID;
 }
 
 entity GHGContact : managed {

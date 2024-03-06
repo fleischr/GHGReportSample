@@ -11,10 +11,12 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/openapi-generator": "^3.12.0",
+    "@sap/ux-specification": "^1.120.5",
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "watch-emissionsdatalist": "cds watch --open emissionsdatalist/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -43,5 +45,8 @@
       "no-console": "off",
       "require-atomic-updates": "off"
     }
-  }
+  },
+  "sapux": [
+    "app/emissionsdatalist"
+  ]
 }
