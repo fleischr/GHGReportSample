@@ -5,7 +5,7 @@ service GHGService @(path:'/emissionsdata') {
     entity GHGVerifier as select from ghgdata.GHGVerifier{*};
     entity GHGContact as select from ghgdata.GHGContact{*};
     @requires: 'authenticated-user'
-    action verifyEmissions(emissions: CarbonEmissions:ID, scope: Integer);
+    action verifyEmissions(emissions: CarbonEmissions:ID) returns Boolean;
 
     @requires: 'authenticated-user'
     action offsetEmissions(emissions: CarbonEmissions:ID);

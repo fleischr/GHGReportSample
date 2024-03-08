@@ -4,7 +4,7 @@ annotate service.CarbonEmissions with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'ID',
+            Label : 'Carbon Emissions ID',
             Value : ID,
         },
         {
@@ -35,7 +35,7 @@ annotate service.CarbonEmissions with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'ID',
+                Label : 'Carbon Emissions ID',
                 Value : ID,
             },
             {

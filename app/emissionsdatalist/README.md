@@ -28,6 +28,12 @@ List of carbon emissions data
 
 http://localhost:4004/emissionsdatalist/webapp/index.html
 
+
+### Tips !
+
+- On windows run ```cds watch``` from windows command line rather than git bash to ensure the app backend is fully running as intended
+- When running the app on localhost, you may be prompted for a user login. You can simply select OK to login
+
 #### Pre-requisites:
 
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
