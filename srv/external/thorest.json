@@ -1,0 +1,2006 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Thorest",
+    "description": "RESTful API to access VeChain Thor Network\n\n[Project Home](https://github.com/vechain/thor)\n",
+    "license": {
+      "name": "LGPL 3.0",
+      "url": "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+    },
+    "version": "2.1.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "local thor node"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "Access to account objects"
+    },
+    {
+      "name": "Transactions",
+      "description": "Access to transactions"
+    },
+    {
+      "name": "Blocks",
+      "description": "Access to blocks"
+    },
+    {
+      "name": "Logs",
+      "description": "Access to event & transfer logs"
+    },
+    {
+      "name": "Node",
+      "description": "Access to node status info"
+    },
+    {
+      "name": "Subscriptions",
+      "description": "Subscribe interested subjects"
+    },
+    {
+      "name": "Debug",
+      "description": "Debug utilities"
+    }
+  ],
+  "paths": {
+    "/accounts/{address}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AddressInPath"
+        },
+        {
+          "$ref": "#/components/parameters/RevisionInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Retrieve account detail",
+        "description": "includes `balance`, `energy` and `hasCode`, by account `address`. An account with `hasCode` be *true* is a contract.\n\nHistorical account detail can be queried by specifying `revision` query string.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "deprecated": true,
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Execute account code",
+        "description": "to simulate contract method call, without sending transaction to block chain.\n\nIt's useful to estimate gas usage and execution result of a clause.\n",
+        "requestBody": {
+          "description": "arguments and environment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/*": {
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RevisionInQuery"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Execute a batch of codes",
+        "description": "to simulate execution of a transaction.\n",
+        "requestBody": {
+          "description": "arguments and environment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BatchCallData"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ExtendedCallData"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchCallResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "post": {
+        "deprecated": true,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RevisionInQuery"
+          }
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Execute bytecodes",
+        "description": "to simulate contract deployment without sending transaction to block chain.\n\nIt's useful to estimate gas usage and contract deployment result of a clause.\n\n### TIPS:\n  - `data` in request body is the bytecodes of a contract\n  - `data` in response body is the runtime bytecodes assigned to account which the contract to be deployed\n",
+        "requestBody": {
+          "description": "arguments and environment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{address}/code": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AddressInPath"
+        },
+        {
+          "$ref": "#/components/parameters/RevisionInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Retrieve account code",
+        "description": "if any. Here the code is runtime bytecodes.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Code"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{address}/storage/{key}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AddressInPath"
+        },
+        {
+          "$ref": "#/components/parameters/StorageKeyInPath"
+        },
+        {
+          "$ref": "#/components/parameters/RevisionInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Retrieve account storage value",
+        "description": "for given key.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Storage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TxIDInPath"
+        },
+        {
+          "$ref": "#/components/parameters/RawInQuery"
+        },
+        {
+          "$ref": "#/components/parameters/HeadInQuery"
+        },
+        {
+          "$ref": "#/components/parameters/PendingInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Retrieve transaction",
+        "description": "by ID. When `pending` is true, a pending tx with null `meta` might be returned.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Tx"
+                        }
+                      ],
+                      "properties": {
+                        "meta": {
+                          "required": false,
+                          "$ref": "#/components/schemas/TxMeta"
+                        }
+                      }
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/RawTx"
+                        }
+                      ],
+                      "properties": {
+                        "meta": {
+                          "required": false,
+                          "$ref": "#/components/schemas/TxMeta"
+                        }
+                      },
+                      "description": "raw transaction"
+                    }
+                  ],
+                  "example": {
+                    "id": "0x4de71f2d588aa8a1ea00fe8312d92966da424d9939a511fc0be81e65fad52af8",
+                    "chainTag": 1,
+                    "blockRef": "0x00000001511fc0be",
+                    "expiration": 30,
+                    "clauses": [],
+                    "gasPriceCoef": 128,
+                    "gas": 21000,
+                    "origin": "0x7567d83b7b8d80addcb281a71d54fc7b3364ffed",
+                    "delegator": null,
+                    "nonce": "0xd92966da424d9939",
+                    "dependsOn": null,
+                    "size": 180,
+                    "meta": {
+                      "blockID": "0x00000001c458949985a6d86b7139690b8811dd3b4647c02d4f41cdefb7d32327",
+                      "blockNumber": 1,
+                      "blockTimestamp": 1523156271
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{id}/receipt": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TxIDInPath"
+        },
+        {
+          "$ref": "#/components/parameters/HeadInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Retrieve transaction receipt",
+        "description": "by ID.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Receipt"
+                    }
+                  ],
+                  "properties": {
+                    "meta": {
+                      "$ref": "#/components/schemas/ReceiptMeta"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Commit transaction",
+        "description": "in raw.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RawTx"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TXID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocks/{revision}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RevisionInPath"
+        },
+        {
+          "$ref": "#/components/parameters/ExpandedInQuery"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Blocks"
+        ],
+        "summary": "Retrieve block",
+        "description": "by ID or number, or 'best' for latest block or 'finalized' for finalized block. If `expanded` query option is true, all transactions along with\ntheir receipts will be embedded under `transactions` field instead of ids.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Block"
+                        },
+                        {
+                          "$ref": "#/components/schemas/IsTrunk"
+                        },
+                        {
+                          "$ref": "#/components/schemas/IsFinalized"
+                        }
+                      ],
+                      "properties": {
+                        "transactions": {
+                          "description": "transaction IDs",
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Block"
+                        },
+                        {
+                          "$ref": "#/components/schemas/IsTrunk"
+                        },
+                        {
+                          "$ref": "#/components/schemas/IsFinalized"
+                        }
+                      ],
+                      "properties": {
+                        "transactions": {
+                          "description": "embedded transactions along with their receipts",
+                          "type": "array",
+                          "items": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Tx"
+                              },
+                              {
+                                "$ref": "#/components/schemas/Receipt"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "description": "expanded block"
+                    }
+                  ]
+                },
+                "example": {
+                  "number": 325324,
+                  "id": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215",
+                  "size": 373,
+                  "parentID": "0x0004f6cb730dbd90fed09d165bfdf33cc0eed47ec068938f6ee7b7c12a4ea98d",
+                  "timestamp": 1533267900,
+                  "gasLimit": 11253579,
+                  "beneficiary": "0xb4094c25f86d628fdd571afc4077f0d0196afb48",
+                  "gasUsed": 21000,
+                  "totalScore": 1029988,
+                  "txsRoot": "0x89dfd9fcd10c9e53d68592cf8b540b280b72d381b868523223992f3e09a806bb",
+                  "txsFeatures": 0,
+                  "stateRoot": "0x86bcc6d214bc9d8d0dedba1012a63c8317d19ce97f60c8a2ef5c59bbd40d4261",
+                  "receiptsRoot": "0x15787e2533c470e8a688e6cd17a1ee12d8457778d5f82d2c109e2d6226d8e54e",
+                  "com": true,
+                  "signer": "0xab7b27fc9e7d29f9f2e5bd361747a5515d0cc2d1",
+                  "isTrunk": true,
+                  "isFinalized": false,
+                  "transactions": [
+                    "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logs/event": {
+      "post": {
+        "tags": [
+          "Logs"
+        ],
+        "summary": "Filter event logs",
+        "description": "Event logs are produced by `OP_LOG` in EVM.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventFilter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    ],
+                    "properties": {
+                      "meta": {
+                        "$ref": "#/components/schemas/LogMeta"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logs/transfer": {
+      "post": {
+        "tags": [
+          "Logs"
+        ],
+        "summary": "Filter transfer logs",
+        "description": "Transfer logs are recorded on VET transferring.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferFilter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Transfer"
+                      }
+                    ],
+                    "properties": {
+                      "meta": {
+                        "$ref": "#/components/schemas/LogMeta"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/node/network/peers": {
+      "get": {
+        "tags": [
+          "Node"
+        ],
+        "summary": "Retrieve connected peers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PeerStats"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/block": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe new blocks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PositionInQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Block"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Obsolete"
+                    }
+                  ],
+                  "properties": {
+                    "transactions": {
+                      "description": "transaction IDs",
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/event": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe new events",
+        "description": "which satisfy criteria in query.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PositionInQuery"
+          },
+          {
+            "name": "addr",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "address of event emitter"
+          },
+          {
+            "name": "t0",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "topic0 of event"
+          },
+          {
+            "name": "t1",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "topic1 of event"
+          },
+          {
+            "name": "t2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "topic2 of event"
+          },
+          {
+            "name": "t3",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "topic3 of event"
+          },
+          {
+            "name": "t4",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "topic4 of event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Event"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Obsolete"
+                    }
+                  ],
+                  "properties": {
+                    "meta": {
+                      "$ref": "#/components/schemas/LogMeta"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/transfer": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe new transfers",
+        "description": "which satisfy criteria in query.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PositionInQuery"
+          },
+          {
+            "name": "txOrigin",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "signer address of tx which contains the transfer"
+          },
+          {
+            "name": "sender",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "address of token sender"
+          },
+          {
+            "name": "recipient",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "address of token recipient"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Transfer"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Obsolete"
+                    }
+                  ],
+                  "properties": {
+                    "meta": {
+                      "$ref": "#/components/schemas/LogMeta"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/beat": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe block chain's beats",
+        "description": "which contain summary of new blocks, and bloom filters that composited with affected addresses.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PositionInQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Beat"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Obsolete"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/beat2": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe block chain's beats",
+        "description": "which contain summary of new blocks, and bloom filters that composited with affected addresses.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PositionInQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Beat2"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Obsolete"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/txpool": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "(Websocket) Subscribe to new transactions",
+        "description": "which is in pending state.\n",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TXID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/debug/tracers": {
+      "post": {
+        "tags": [
+          "Debug"
+        ],
+        "summary": "Create a tracer",
+        "description": "for a clause",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ClauseTracerOption"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TracerOption"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/debug/tracers/call": {
+      "post": {
+        "tags": [
+          "Debug"
+        ],
+        "summary": "Create a tracer",
+        "description": "for evaluating a method call",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/HeadInQuery"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TracerOption"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CallData"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ExtendedCallData"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/debug/storage-range": {
+      "post": {
+        "tags": [
+          "Debug"
+        ],
+        "summary": "Retrieve storage range",
+        "description": "of the account with given address\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StorageRangeOption"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageRange"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Account": {
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "balance in unit WEI, presented with hex string",
+            "example": "0x47ff1f90327aa0f8e"
+          },
+          "energy": {
+            "type": "string",
+            "description": "energy in uint WEI, presented with hex string",
+            "example": "0xcf624158d591398"
+          },
+          "hasCode": {
+            "type": "boolean",
+            "description": "whether the account has code",
+            "example": false
+          }
+        }
+      },
+      "Code": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "0x6060604052600080fd00a165627a7a72305820c23d3ae2dc86ad130561a2829d87c7cb8435365492bd1548eb7e7fc0f3632be90029"
+          }
+        }
+      },
+      "Storage": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "example": "0x0000000000000000000000000000000000000000000000000000000000000001"
+          }
+        }
+      },
+      "TxMeta": {
+        "description": "transaction meta info",
+        "properties": {
+          "blockID": {
+            "type": "string",
+            "description": "block identifier (bytes32)",
+            "example": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215"
+          },
+          "blockNumber": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "block number (height)",
+            "example": 325324
+          },
+          "blockTimestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block unix timestamp",
+            "example": 1533267900
+          }
+        }
+      },
+      "ReceiptMeta": {
+        "description": "tx receipt meta info",
+        "properties": {
+          "blockID": {
+            "type": "string",
+            "description": "block identifier (bytes32)",
+            "example": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215"
+          },
+          "blockNumber": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "block number (height)",
+            "example": 325324
+          },
+          "blockTimestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block unix timestamp",
+            "example": 1533267900
+          },
+          "txID": {
+            "type": "string",
+            "description": "transaction identifier",
+            "example": "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+          },
+          "txOrigin": {
+            "type": "string",
+            "description": "transaction origin (signer)",
+            "example": "0xdb4027477b2a8fe4c83c6dafe7f86678bb1b8a8d"
+          }
+        }
+      },
+      "LogMeta": {
+        "description": "event or transfer log meta info",
+        "properties": {
+          "blockID": {
+            "type": "string",
+            "description": "block identifier (bytes32)",
+            "example": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215"
+          },
+          "blockNumber": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "block number (height)",
+            "example": 325324
+          },
+          "blockTimestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block unix timestamp",
+            "example": 1533267900
+          },
+          "txID": {
+            "type": "string",
+            "description": "transaction identifier",
+            "example": "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+          },
+          "txOrigin": {
+            "type": "string",
+            "description": "transaction origin (signer)",
+            "example": "0xdb4027477b2a8fe4c83c6dafe7f86678bb1b8a8d"
+          },
+          "clauseIndex": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "index of clause which generates this log",
+            "example": 0
+          }
+        }
+      },
+      "Block": {
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "block number (height)",
+            "example": 325324
+          },
+          "id": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "block identifier",
+            "example": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215"
+          },
+          "size": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "RLP encoded block size in bytes",
+            "example": 373
+          },
+          "parentID": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "parent block ID",
+            "example": "0x0004f6cb730dbd90fed09d165bfdf33cc0eed47ec068938f6ee7b7c12a4ea98d"
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block unix timestamp",
+            "example": 1533267900
+          },
+          "gasLimit": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block gas limit (max allowed accumulative gas usage of transactions)",
+            "example": 11253579
+          },
+          "beneficiary": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "address of account to receive block reward",
+            "example": "0xb4094c25f86d628fdd571afc4077f0d0196afb48"
+          },
+          "gasUsed": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "accumulative gas usage of transactions",
+            "example": 21000
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "sum of all ancestral blocks' score",
+            "example": 1029988
+          },
+          "txsRoot": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "root hash of transactions in the block",
+            "example": "0x89dfd9fcd10c9e53d68592cf8b540b280b72d381b868523223992f3e09a806bb"
+          },
+          "txsFeatures": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "supported txs features bitset",
+            "example": 0
+          },
+          "stateRoot": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "root hash of accounts state",
+            "example": "0x86bcc6d214bc9d8d0dedba1012a63c8317d19ce97f60c8a2ef5c59bbd40d4261"
+          },
+          "receiptsRoot": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "root hash of transaction receipts",
+            "example": "0x15787e2533c470e8a688e6cd17a1ee12d8457778d5f82d2c109e2d6226d8e54e"
+          },
+          "com": {
+            "type": "boolean",
+            "description": "whether the block signer voted COM(Commit) in BFT"
+          },
+          "signer": {
+            "type": "string",
+            "format": "bytes20",
+            "description": "the one who signed this block",
+            "example": "0xab7b27fc9e7d29f9f2e5bd361747a5515d0cc2d1"
+          }
+        }
+      },
+      "Clause": {
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "recipient of clause, null for contract deployment (bytes32)",
+            "example": "0x5034aa590125b64023a0262112b98d72e3c8e40e"
+          },
+          "value": {
+            "type": "string",
+            "description": "hex form of token to be transferred",
+            "example": "0x47fdb3c3f456c0000"
+          },
+          "data": {
+            "type": "string",
+            "description": "input data (bytes)",
+            "example": "0x"
+          }
+        }
+      },
+      "Tx": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "identifier of the transaction",
+            "example": "0x284bba50ef777889ff1a367ed0b38d5e5626714477c40de38d71cedd6f9fa477"
+          },
+          "origin": {
+            "type": "string",
+            "description": "the one who signed the transaction",
+            "example": "0xdb4027477b2a8fe4c83c6dafe7f86678bb1b8a8d"
+          },
+          "delegator": {
+            "type": "string",
+            "description": "the delegator who paid the gas fee",
+            "example": null
+          },
+          "size": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "byte size of the transaction that is RLP encoded",
+            "example": 130
+          },
+          "chainTag": {
+            "type": "integer",
+            "format": "uint8",
+            "description": "last byte of genesis block ID",
+            "example": 39
+          },
+          "blockRef": {
+            "type": "string",
+            "description": "8 bytes prefix of some block ID",
+            "example": "0x0004f6cb730dbd90"
+          },
+          "expiration": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "expiration relative to blockRef, in unit block",
+            "example": 720
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Clause"
+            }
+          },
+          "gasPriceCoef": {
+            "type": "integer",
+            "format": "uint8",
+            "description": "coefficient used to calculate the final gas price",
+            "example": 0
+          },
+          "gas": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "max amount of gas can be consumed to execute this transaction",
+            "example": 21000
+          },
+          "dependsOn": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "ID of the transaction on which the current transaction depends on. can be null.",
+            "example": null
+          },
+          "nonce": {
+            "type": "string",
+            "example": "0x29c257e36ea6e72a"
+          }
+        }
+      },
+      "RawTx": {
+        "properties": {
+          "raw": {
+            "type": "string",
+            "description": "hex form of encoded transaction",
+            "example": "0xf86981ba800adad994000000000000000000000000000000000000746f82271080018252088001c0b8414792c9439594098323900e6470742cd877ec9f9906bca05510e421f3b013ed221324e77ca10d3466b32b1800c72e12719b213f1d4c370305399dd27af962626400"
+          }
+        }
+      },
+      "Event": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "the address of contract which produces the event (bytes20)",
+            "example": "0x7567d83b7b8d80addcb281a71d54fc7b3364ffed"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "0x4de71f2d588aa8a1ea00fe8312d92966da424d9939a511fc0be81e65fad52af8"
+            }
+          },
+          "data": {
+            "type": "string",
+            "example": "0x4de71f2d588aa8a1ea00fe8312d92966da424d9939a511fc0be81e65fad52af8"
+          }
+        }
+      },
+      "Transfer": {
+        "properties": {
+          "sender": {
+            "type": "string",
+            "description": "address that sends tokens",
+            "example": "0xdb4027477b2a8fe4c83c6dafe7f86678bb1b8a8d"
+          },
+          "recipient": {
+            "type": "string",
+            "description": "address that receives tokens",
+            "example": "0x5034aa590125b64023a0262112b98d72e3c8e40e"
+          },
+          "amount": {
+            "type": "string",
+            "description": "amount of tokens",
+            "example": "0x47fdb3c3f456c0000"
+          }
+        }
+      },
+      "Receipt": {
+        "properties": {
+          "gasUsed": {
+            "type": "integer",
+            "format": "uint64",
+            "example": 21000
+          },
+          "gasPayer": {
+            "type": "string",
+            "description": "address of account who paid used gas",
+            "example": "0xdb4027477b2a8fe4c83c6dafe7f86678bb1b8a8d"
+          },
+          "paid": {
+            "type": "string",
+            "description": "hex form of amount of paid energy",
+            "example": "0x1236efcbcbb340000"
+          },
+          "reward": {
+            "type": "string",
+            "description": "hex form of amount of reward",
+            "example": "0x576e189f04f60000"
+          },
+          "reverted": {
+            "type": "boolean",
+            "description": "true means the transaction was reverted",
+            "example": false
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "contractAddress": {
+                  "type": "string",
+                  "description": "deployed contract address, if the corresponding clause is a\ncontract deployment clause\n",
+                  "example": null
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
+                },
+                "transfers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transfer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CallData": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "amount of token to be transferred"
+          },
+          "data": {
+            "type": "string",
+            "description": "input data for contract call"
+          },
+          "gas": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "max allowed gas for execution"
+          },
+          "gasPrice": {
+            "type": "string",
+            "description": "absolute gas price"
+          },
+          "caller": {
+            "type": "string",
+            "description": "caller address (msg.sender)"
+          }
+        },
+        "example": {
+          "value": "0xde0b6b3a7640000",
+          "data": "0x5665436861696e2054686f72",
+          "gas": 50000,
+          "gasPrice": "1000000000000000",
+          "caller": "0x7567d83b7b8d80addcb281a71d54fc7b3364ffed"
+        }
+      },
+      "ExtendedCallData": {
+        "properties": {
+          "provedWork": {
+            "type": "string",
+            "description": "tx proved work(for extension contract)"
+          },
+          "gasPayer": {
+            "type": "string",
+            "description": "gas payer(for extension contract)"
+          },
+          "expiration": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "tx expiration(for extension contract)"
+          },
+          "blockRef": {
+            "type": "string",
+            "description": "block reference(for extension contract)"
+          }
+        },
+        "example": {
+          "provedWork": "1000",
+          "gasPayer": "0xd3ae78222beadb038203be21ed5ce7c9b1bff602",
+          "expiration": 1000,
+          "blockRef": "0x00000000851caf3c"
+        }
+      },
+      "CallResult": {
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "the output data",
+            "example": "0x103556a73c10e38ffe2fc4aa50fc9d46ad0148f07e26417e117bd1ece9d948b5"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "transfers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transfer"
+            }
+          },
+          "gasUsed": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "gas used during execution",
+            "example": 21000
+          },
+          "reverted": {
+            "type": "boolean",
+            "example": false
+          },
+          "vmError": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "BatchCallData": {
+        "properties": {
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Clause"
+            }
+          },
+          "gas": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "max allowed gas for execution"
+          },
+          "gasPrice": {
+            "type": "string",
+            "description": "absolute gas price"
+          },
+          "caller": {
+            "type": "string",
+            "description": "caller address (msg.sender)"
+          }
+        },
+        "example": {
+          "clauses": [
+            {
+              "to": "0x5034aa590125b64023a0262112b98d72e3c8e40e",
+              "value": "0xde0b6b3a7640000",
+              "data": "0x5665436861696e2054686f72"
+            }
+          ],
+          "gas": 50000,
+          "gasPrice": "1000000000000000",
+          "caller": "0x7567d83b7b8d80addcb281a71d54fc7b3364ffed"
+        }
+      },
+      "BatchCallResult": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CallResult"
+        }
+      },
+      "FilterOptions": {
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "example": 0,
+            "description": "offset in matched record set\n"
+          },
+          "limit": {
+            "type": "integer",
+            "example": 10,
+            "description": "limit of records to output\n"
+          }
+        },
+        "description": "pass these parameters if you need filtered results paged. e.g. \n```\n{\n  \"options\": {\n    \"offset\": 0,\n    \"limit\": 10   \n  }\n}\n```\nthe above refers that page offset is 0, and the page size is 10.\npass options `null` if you don't need to demand paging.\n"
+      },
+      "FilterRange": {
+        "properties": {
+          "unit": {
+            "type": "string",
+            "enum": [
+              "block",
+              "time"
+            ],
+            "example": "block",
+            "description": "defines the unit of `from` and `to`.\n`block` means block number, `time` means block timestamp, default to `block`.\n"
+          },
+          "from": {
+            "type": "integer",
+            "format": "uint64",
+            "example": 0
+          },
+          "to": {
+            "type": "integer",
+            "format": "uint64",
+            "example": 100000
+          }
+        },
+        "description": "defines the range to filter in. e.g.\n```\n{\n  \"range\": {\n    \"unit\": \"block\",\n    \"from\": 10,\n    \"to\": 1000\n  }\n}\n```\nrefers to the range from block 10 to block 1000.\n`null` stands for the full range.\n    \n"
+      },
+      "EventCriteria": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "address of event emitter"
+          },
+          "topic0": {
+            "type": "string"
+          },
+          "topic1": {
+            "type": "string"
+          },
+          "topic2": {
+            "type": "string"
+          },
+          "topic3": {
+            "type": "string"
+          },
+          "topic4": {
+            "type": "string"
+          }
+        },
+        "description": "criteria to filter out event. All fields are joined with `and` operator. `null` field are ignored. e.g. \n```\n{\n  \"address\": \"0x0000000000000000000000000000456E65726779\",\n  \"topic0\": \"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef\"\n}\n```\nmatches events emitted by `0xe59d475abe695c7f67a8a2321f33a856b0b4c71d` and with `topic0` equals `0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef`.\n",
+        "example": {
+          "address": "0x0000000000000000000000000000456E65726779",
+          "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "topic1": "0x0000000000000000000000005034aa590125b64023a0262112b98d72e3c8e40e"
+        }
+      },
+      "EventFilter": {
+        "properties": {
+          "range": {
+            "$ref": "#/components/schemas/FilterRange"
+          },
+          "options": {
+            "$ref": "#/components/schemas/FilterOptions"
+          },
+          "criteriaSet": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventCriteria"
+            }
+          },
+          "order": {
+            "description": "order of filters, defaults to `asc`\n",
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      },
+      "TransferCriteria": {
+        "properties": {
+          "txOrigin": {
+            "type": "string",
+            "example": "0xe59d475abe695c7f67a8a2321f33a856b0b4c71d"
+          },
+          "sender": {
+            "type": "string",
+            "example": "0xe59d475abe695c7f67a8a2321f33a856b0b4c71d"
+          },
+          "recipient": {
+            "type": "string",
+            "example": "0x7567d83b7b8d80addcb281a71d54fc7b3364ffed"
+          }
+        }
+      },
+      "TransferFilter": {
+        "properties": {
+          "range": {
+            "$ref": "#/components/schemas/FilterRange"
+          },
+          "options": {
+            "$ref": "#/components/schemas/FilterOptions"
+          },
+          "criteriaSet": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransferCriteria"
+            }
+          },
+          "order": {
+            "description": "order of filters, defaults to `asc`\n",
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      },
+      "PeerStats": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "thor/v1.0.0-6680b98-dev/linux/go1.10.3"
+          },
+          "bestBlockID": {
+            "type": "string",
+            "example": "0x000087b3a4d4cdf1cc52d56b9704f4c18f020e1b48dbbf4a23d1ee4f1fa5ff94"
+          },
+          "totalScore": {
+            "type": "integer",
+            "example": 68497
+          },
+          "peerID": {
+            "type": "string",
+            "example": "50e122a505ee55b84331068acfd857e37ad58f463a0fab9aaff2c1e4b2e2d22ae71dc14fdaf6eead74bd3f60594644aa35c588f9ca6be3341e2ce18ddc413321"
+          },
+          "netAddr": {
+            "type": "string",
+            "example": "128.1.39.120:11235"
+          },
+          "inbound": {
+            "type": "boolean",
+            "example": false
+          },
+          "duration": {
+            "type": "integer",
+            "example": 28
+          }
+        }
+      },
+      "TXID": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "0x4de71f2d588aa8a1ea00fe8312d92966da424d9939a511fc0be81e65fad52af8"
+        }
+      },
+      "Obsolete": {
+        "properties": {
+          "obsolete": {
+            "type": "boolean",
+            "description": "indicates whether the block containing this data become branch block\n"
+          }
+        }
+      },
+      "ClauseTracerOption": {
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "the unified path of target to be traced.\nCurrently, only clause is supported. Format:\n`blockID/(txIndex|txId)/clauseIndex`\n",
+            "example": "0x000dabb4d6f0a80ad7ad7cd0e07a1f20b546db0730d869d5ccb0dd2a16e7595b/0/0"
+          }
+        }
+      },
+      "TracerOption": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "",
+              "4byte",
+              "call",
+              "noop",
+              "prestate",
+              "unigram",
+              "bigram",
+              "trigram",
+              "evmdis",
+              "opcount"
+            ],
+            "description": "name of tracer. Empty name stands for default struct logger tracer.\n",
+            "example": ""
+          },
+          "config": {
+            "type": "object",
+            "description": "configuration of tracer. It is tracer specific.\n"
+          }
+        }
+      },
+      "StorageRangeOption": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "address of account\n",
+            "example": "0xa4627036e2095eb71c2341054daa63577c062498"
+          },
+          "keyStart": {
+            "type": "string",
+            "example": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "maxResult": {
+            "type": "number",
+            "example": 10
+          },
+          "target": {
+            "type": "string",
+            "example": "0x000edefb448685f9c72fc2b946980ef51d8d208bbaa4d3fdcf0c57d4847aca2e/0/0"
+          }
+        }
+      },
+      "StorageRange": {
+        "properties": {
+          "nextKey": {
+            "type": "string",
+            "example": null
+          },
+          "storage": {
+            "type": "object",
+            "example": {
+              "0x33e423980c9b37d048bd5fadbd4a2aeb95146922045405accc2f468d0ef96988": {
+                "key": "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "value": "0x00000000000000000000000000000000000000000000000000000000000000c8"
+              }
+            }
+          }
+        }
+      },
+      "Beat": {
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "block number (height)",
+            "example": 325324
+          },
+          "id": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "block identifier",
+            "example": "0x0004f6cc88bb4626a92907718e82f255b8fa511453a78e8797eb8cea3393b215"
+          },
+          "parentID": {
+            "type": "string",
+            "format": "bytes32",
+            "description": "parent block ID",
+            "example": "0x0004f6cb730dbd90fed09d165bfdf33cc0eed47ec068938f6ee7b7c12a4ea98d"
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block unix timestamp",
+            "example": 1533267900
+          },
+          "txsFeatures": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "supported txs features bitset",
+            "example": 0
+          },
+          "bloom": {
+            "type": "string",
+            "format": "hex",
+            "description": "the bloom filter composited with affected addresses\n",
+            "example": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "k": {
+            "type": "integer",
+            "format": "uint32",
+            "description": "the number of hash functions for bloom filter\n",
+            "example": 3
+          }
+        }
+      },
+      "Beat2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Beat"
+          }
+        ],
+        "properties": {
+          "gasLimit": {
+            "type": "integer",
+            "format": "uint64",
+            "description": "block gas limit",
+            "example": 12000000
+          }
+        }
+      },
+      "IsTrunk": {
+        "properties": {
+          "isTrunk": {
+            "type": "boolean",
+            "description": "whether the block is on the trunk"
+          }
+        }
+      },
+      "IsFinalized": {
+        "properties": {
+          "isFinalized": {
+            "type": "boolean",
+            "description": "whether the block is finalized"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "AddressInPath": {
+        "name": "address",
+        "in": "path",
+        "description": "address of account",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "bytes20"
+        },
+        "example": "0x5034aa590125b64023a0262112b98d72e3c8e40e"
+      },
+      "RawInQuery": {
+        "name": "raw",
+        "in": "query",
+        "description": "whether retrieve a raw transaction.",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "RevisionInQuery": {
+        "name": "revision",
+        "in": "query",
+        "description": "can be block number or ID. best block is assumed if omitted.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "RevisionInPath": {
+        "name": "revision",
+        "in": "path",
+        "description": "block ID or number, or 'best' stands for latest block, or 'finalized' stands for finalized block\n",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "best"
+      },
+      "HeadInQuery": {
+        "name": "head",
+        "in": "query",
+        "description": "ID of head block. best block is assumed if omitted",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "StorageKeyInPath": {
+        "in": "path",
+        "description": "the key(position) to access account storage",
+        "required": true,
+        "name": "key",
+        "schema": {
+          "type": "string"
+        },
+        "example": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      },
+      "FilterAddressInQuery": {
+        "name": "address",
+        "in": "query",
+        "description": "address of account which is the events emitter",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "0x0000000000000000000000000000456e65726779"
+      },
+      "FilterOrderInQuery": {
+        "name": "order",
+        "in": "query",
+        "description": "order of filters, defaults to `asc`\n",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ]
+        },
+        "example": "asc"
+      },
+      "TxIDInPath": {
+        "in": "path",
+        "description": "ID of transaction",
+        "required": true,
+        "name": "id",
+        "schema": {
+          "type": "string"
+        },
+        "example": "0x9bcc6526a76ae560244f698805cc001977246cb92c2b4f1e2b7a204e445409ea"
+      },
+      "PositionInQuery": {
+        "name": "pos",
+        "in": "query",
+        "description": "a saved block ID for resuming the subscription. best block ID is assumed if omitted.\n",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "ExpandedInQuery": {
+        "name": "expanded",
+        "in": "query",
+        "required": false,
+        "description": "whether the returned block is expanded.\n",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "PendingInQuery": {
+        "name": "pending",
+        "in": "query",
+        "required": false,
+        "description": "whether to return tx, even it's pending\n",
+        "schema": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

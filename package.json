@@ -12,7 +12,8 @@
   "devDependencies": {
     "@sap-cloud-sdk/openapi-generator": "^3.12.0",
     "@sap/ux-specification": "^1.120.5",
-    "sqlite3": "^5.0.4"
+    "sqlite3": "^5.0.4",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "cds run",
@@ -48,5 +49,17 @@
   },
   "sapux": [
     "app/emissionsdatalist"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "Thorest": {
+        "kind": "rest",
+        "model": "srv/external/thorest"
+      },
+      "Itinerary.API": {
+        "kind": "rest",
+        "model": "srv/external/ConcurTravelItinerary"
+      }
+    }
+  }
 }

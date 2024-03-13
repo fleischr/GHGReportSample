@@ -10,7 +10,7 @@
     },
     "emissions_details" : [
         {
-            "doc_number" : "",
+            "doc_number" : "3333000010",
             "doc_type" : "VBRK",
             "doc_line" : "10",
             "gross_co2e_emissions" : 0.33,
@@ -22,7 +22,7 @@
             "emissions_ownership" : 1.00
         },
         {
-            "doc_number" : "",
+            "doc_number" : "3333000010",
             "doc_type" : "VBRK",
             "doc_line" : "20",
             "gross_co2e_emissions" : 0.27,
@@ -34,7 +34,7 @@
             "emissions_ownership" : 1.00
         },
         {
-            "doc_number" : "",
+            "doc_number" : "3333000010",
             "doc_type" : "VBRK",
             "doc_line" : "30",
             "gross_co2e_emissions" : 0.4,
