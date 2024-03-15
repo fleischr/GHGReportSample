@@ -10,6 +10,7 @@ entity CarbonEmissions : managed {
     EmissionsFrom : DateTime;
     EmissionsTo : DateTime;
     GHGOrgID :  String;
+    PriorID: String;
 }
 
 //need to fill out more fields here
@@ -53,4 +54,8 @@ entity GHGContact : managed {
     Name : String;
     Email : String;
     PhoneNumber : String;
+}
+
+entity Networks : managed {
+    key NetworkID : String;
 }

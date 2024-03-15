@@ -1025,7 +1025,6 @@ type Itinerary.API_types.model_ErrorAPIResponse {
 type Itinerary.API_types.model_ExternalErrorObject {
   errorCode : String;
   errorMessage : String;
-  errors : many Itinerary.API_types.model_ExternalErrorObject;
 };
 
 type Itinerary.API_types.model_ItineraryIdListResponse {
