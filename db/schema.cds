@@ -59,3 +59,10 @@ entity GHGContact : managed {
 entity Networks : managed {
     key NetworkID : String;
 }
+
+type emissionsToken {
+    TokenID : String;
+    SmartContractAddress: String;
+    TransactionHash: String;
+    NetworkID: String;
+}

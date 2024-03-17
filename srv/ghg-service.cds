@@ -9,4 +9,8 @@ service GHGService @(path:'/emissionsdata') {
 
     @requires: 'authenticated-user'
     action offsetEmissions(emissions: CarbonEmissions:ID);
+
+    @requires: 'authenticated-user'
+    @sap.applicable.path: 'tokenizeEmissions/{emissionsID}'
+    action tokenizeEmissions(emissions: CarbonEmissions:ID) returns ghgdata.emissionsToken;
 }
