@@ -32,3 +32,6 @@ mta_archives/
 
 # ENV
 .env
+
+# HTTP tests
+*.test.http
