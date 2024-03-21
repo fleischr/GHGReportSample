@@ -8,6 +8,11 @@ annotate service.CarbonEmissions with @(
             Value : ID,
         },
         {
+            $Type: 'UI.DataFieldForAction', 
+            Action: 'GHGService.tokenizeEmissions', 
+            Label: 'Tokenize Emissions'
+        },
+        {
             $Type : 'UI.DataField',
             Label : 'ObjectType',
             Value : ObjectType,
