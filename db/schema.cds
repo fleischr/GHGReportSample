@@ -13,7 +13,6 @@ entity CarbonEmissions : managed {
     PriorID: String;
 }
 
-//need to fill out more fields here
 entity CarbonOffset : managed {
     key InternalOffsetID : Integer;
     isRetired : Boolean;
@@ -21,7 +20,25 @@ entity CarbonOffset : managed {
     NetworkID : String;
     OffsetAmount : Decimal(18, 9);
     UnitOfMeasure : String;
+    TransactionHash : String;
+    Vintage : Integer;
+    Region : String;
+    Methodology : String;
 }
+
+type CarbonOffsetType  {
+    InternalOffsetID : Integer;
+    isRetired : Boolean;
+    isForward : Boolean;
+    NetworkID : String;
+    OffsetAmount : Decimal(18, 9);
+    UnitOfMeasure : String;
+    TransactionHash : String;
+    Vintage : Integer;
+    Region : String;
+    Methodology : String;
+}
+
 
 //need to relate retirement to emissions data correctly
 entity AtomicCarbonRetirement : managed {

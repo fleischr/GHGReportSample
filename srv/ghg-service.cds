@@ -4,14 +4,8 @@ service GHGService @(path:'/emissionsdata') {
     entity GHGOrganization as select from ghgdata.GHGOrganization{*};
     entity GHGVerifier as select from ghgdata.GHGVerifier{*};
     entity GHGContact as select from ghgdata.GHGContact{*};
-    @requires: 'authenticated-user'
-    @sap.applicable.path: 'verifyEmissions/{emissionsID}'
-    action verifyEmissions(emissions: CarbonEmissions:ID) returns Boolean;
 
-    @requires: 'authenticated-user'
-    @sap.applicable.path: 'offsetEmissions/{emissionsID}'
-    action offsetEmissions(emissions: CarbonEmissions:ID);
-
+    function offsetEmissions(emissions: CarbonEmissions:ID) returns ghgdata.CarbonOffsetType;
     function tokenizeEmissions(emissionsID: Integer) returns Integer;
     function requestScope3Verification(emissionsID: Integer) returns ghgdata.scope3Verification;
 

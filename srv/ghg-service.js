@@ -1,7 +1,8 @@
 const cds = require("@sap/cds");
 const vechain_utils = require("./vechain-utils");
 module.exports = cds.service.impl(async function() {
-    this.on('offsetEmissions', async(emissionsID) => {
+    
+    this.on('offsetEmissions', async(req) => {
         console.log('offsetting emissions for' + emissionsID);
     });
 
