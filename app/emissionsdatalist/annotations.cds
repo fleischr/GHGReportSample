@@ -12,6 +12,11 @@ annotate service.CarbonEmissions with @(
             Action: 'GHGService.tokenizeEmissions', 
             Label: 'Tokenize Emissions'
         },
+         {
+            $Type: 'UI.DataFieldForAction', 
+            Action: 'GHGService.EntityContainer/requestScope3Verification', 
+            Label: 'Request Scope 3 Verification'
+        },
         {
             $Type : 'UI.DataField',
             Label : 'ObjectType',

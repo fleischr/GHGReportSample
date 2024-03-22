@@ -13,5 +13,6 @@ service GHGService @(path:'/emissionsdata') {
     action offsetEmissions(emissions: CarbonEmissions:ID);
 
     function tokenizeEmissions(emissionsID: Integer) returns Integer;
+    function requestScope3Verification(emissionsID: Integer) returns ghgdata.scope3Verification;
 
 }

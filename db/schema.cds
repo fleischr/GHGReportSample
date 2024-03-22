@@ -66,3 +66,15 @@ type emissionsToken {
     TransactionHash: String;
     NetworkID: String;
 }
+
+type scope3Verification {
+    InternalID : Integer;
+    ExternalID : Integer;
+    Scope3TokenID : Integer;
+    Scope1TokenID : Integer;
+    Scope3GHGOrgID : String;
+    Scope1GHGOrgID : String;
+    Scope3ContractAddress : String;
+    Scope1ContractAddress : String;
+    VerificationStatus : Integer;
+}
