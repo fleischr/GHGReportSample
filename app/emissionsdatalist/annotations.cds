@@ -14,12 +14,12 @@ annotate service.CarbonEmissions with @(
         },
          {
             $Type: 'UI.DataFieldForAction', 
-            Action: 'GHGService.EntityContainer/requestScope3Verification', 
+            Action: 'GHGService.requestScope3Verification', 
             Label: 'Request Scope 3 Verification'
         },
         {
             $Type: 'UI.DataFieldForAction', 
-            Action: 'GHGService.EntityContainer/offsetEmissions', 
+            Action: 'GHGService.offsetEmissions', 
             Label: 'Offset'
         },
         {
