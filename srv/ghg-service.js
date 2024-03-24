@@ -3,7 +3,8 @@ const vechain_utils = require("./vechain-utils");
 module.exports = cds.service.impl(async function() {
     
     this.on('offsetEmissions', async(req) => {
-        console.log("offsetting emissions")
+        console.log("offsetting emissions");
+        const { emissionsID } = req.data;
         console.log('offsetting emissions for' + emissionsID);
     });
 
