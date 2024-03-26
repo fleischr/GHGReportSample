@@ -24,7 +24,11 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "4.0"
         }
-      }
+      },
+      "uicards" : {
+        "uri" : "cards/uicards.json",
+        "type" : "JSON"
+      }  
     }
   },
   "sap.ui": {
@@ -78,6 +82,10 @@
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "uri": "i18n/i18n.properties"
+      },
+      "uicards" : {
+        "type" : "sap.ui.model.json.JSONModel",
+        "dataSource": "uicards"
       }
     },
     "resources": {
@@ -126,6 +134,12 @@
               "contextPath": "/CarbonEmissions"
             }
           }
+        },
+        "CardGallery" : {
+          "viewName": "CardGallery",
+          "viewId": "CardGallery",
+          "viewLevel": 1,
+          "title" : "GHG Sample - UI Integration Card Gallery"
         }
       }
     }

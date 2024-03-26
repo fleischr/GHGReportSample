@@ -1,0 +1,38 @@
+<mvc:View xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core"
+		controllerName="emissionsdatalist.controller.CardGallery"
+		xmlns:m="sap.m"
+        xmlns:f="sap.f"
+		xmlns="sap.suite.ui.commons.networkgraph"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:w="sap.ui.integration.widgets"
+        xmlns:card="sap.ui.integration.widgets.Card"
+		height="100%">
+    	<!--<tnt:ToolHeader id="shellLikeToolHeaderOnlyMandatoryControls" class="sapUiTinyMargin sapUiLargeMarginTop">
+			<m:Image src="test-resources/sap/tnt/images/SAP_Logo.png" decorative="false" press="onLogoPressed" tooltip="SAP Logo">
+				<m:layoutData>
+					<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
+				</m:layoutData>
+			</m:Image>
+			<m:Title text="Global Insights - Green Ledger GHG Transaction Detail" wrapping="false">
+				<m:layoutData>
+					<m:OverflowToolbarLayoutData priority="Disappear"/>
+				</m:layoutData>
+			</m:Title>
+			<m:ToolbarSpacer />
+			<m:Avatar src="test-resources/sap/tnt/images/Woman_avatar_01.png" displaySize="XS" press=".onAvatarPressed" tooltip="Profile">
+				<m:layoutData>
+					<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
+				</m:layoutData>
+			</m:Avatar>
+		</tnt:ToolHeader>-->
+    <m:Panel id="_IDGenPanel1" >
+	<m:Title id="nameText" text="GHG Reporting Sample - UI Integration Cards Gallery" level="H2" />
+                <f:GridContainer id="cardgridcontainer">
+					<w:Card id="emmissiondataline" manifest="{uicard1>/emmissiondataline}">
+						<w:layoutData>
+							<f:GridContainerItemLayoutData id="emmissiondatalinelayout" rows="4" columns="8" />
+						</w:layoutData>
+					</w:Card>
+                </f:GridContainer>
+    </m:Panel>
+</mvc:View>
