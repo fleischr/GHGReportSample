@@ -7,6 +7,9 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^6",
+    "bent": "^7.3.12",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.11.1",
     "express": "^4",
     "thor-devkit": "^2.0.9"
   },

@@ -18,4 +18,8 @@ module.exports = cds.service.impl(async function() {
         console.log("begin scope 3 verification...");
         //return structure
     });
+    this.on('vechaintest', async() => {
+        await vechain_utils.vechainTest();
+        console.log("completed vechain test");
+    });
 });
