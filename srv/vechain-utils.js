@@ -64,6 +64,8 @@ var vechain_utils = {
 
     getEthersSigner : function () {
         var privateKey = process.env.OMG_THE_PRIVATE_KEY;
+        const signer = new ethers.Wallet(privateKey);
+        return signer;
     },
     vechainTest : async function() {
         // setup helper functions for http-requests
@@ -73,6 +75,7 @@ var vechain_utils = {
 
         // generate a random wallet for this interaction
         const wallet = ethers.Wallet.createRandom()
+        //const wallet = this.getEthersSigner()
 
         // build the contract call
         const Counter = new ethers.Interface(abi)
