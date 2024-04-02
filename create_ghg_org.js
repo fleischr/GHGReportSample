@@ -1,5 +1,6 @@
 const { ethers } = require('ethers');
 require('dotenv').config();
+const cds = require('@sap/cds');
 const fs = require('fs');
 
 console.log("Creating GHG Org...");
