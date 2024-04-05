@@ -75,6 +75,8 @@ entity GHGContact : managed {
 
 entity Networks : managed {
     key NetworkID : String;
+    NetworkType: String;
+    URL : String;
 }
 
 type emissionsToken {
@@ -94,4 +96,5 @@ type scope3Verification {
     Scope3ContractAddress : String;
     Scope1ContractAddress : String;
     VerificationStatus : Integer;
+    LastTransactionHash : String;
 }

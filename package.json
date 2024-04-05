@@ -1,8 +1,8 @@
 {
   "name": "ghg_cds",
   "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
+  "description": "GHG Emissions Database for tokenization",
+  "repository": "https://github.com/fleischr/GHGReportSample",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {

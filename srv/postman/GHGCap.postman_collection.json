@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "86803625-cf02-4a34-ac46-98301af4baa0",
+		"name": "GHGCap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15160056"
+	},
+	"item": [
+		{
+			"name": "Functions",
+			"item": [
+				{
+					"name": "Tokenize Emissions",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create Org NFT Contract",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Offset Emissions",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Test Vechain Connection",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Request Scope 3 Verification",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Request Scope 1 Verification",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Enlist Verifiers",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emissions Data Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsData",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emissions Data Metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsData/$metadata",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsData",
+						"$metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emissions Data Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsData/$metadata",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsData",
+						"$metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Emissions Data Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/CarbonEmissions(ID=1)",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"CarbonEmissions(ID=1)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Org Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGOrganization",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGOrganization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Org Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGOrganization",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGOrganization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Verifier Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGVerifier",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGVerifier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Verifier Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGVerifier",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGVerifier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Contact Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGContact",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGContact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GHG Contact Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/emissionsdata/GHGContact",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"emissionsdata",
+						"GHGContact"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4004",
+			"type": "string"
+		}
+	]
+}
