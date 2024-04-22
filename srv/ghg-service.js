@@ -11,7 +11,7 @@ module.exports = cds.service.impl(async function() {
     this.on('tokenizeEmissions', async(req) =>{
         console.log("tokenizing emissions");
         const { emissionsID } = req.data;
-        //await vechain_utils.mintEmissionsNFT();
+        await vechain_utils.mintEmissionsNFT();
         return emissionsID;
     });
     this.on('requestScope3Verification', async(req) =>{
