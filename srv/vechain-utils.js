@@ -6,7 +6,7 @@ const { nftaddress, nftabi } = require('./abi/nftcontract.js');
 require('dotenv').config();
 
 var vechain_utils = {
-    mintEmissionsNFT : async function () {
+    mintEmissionsNFT : async function (emissionsData) {
         // setup helper functions for http-requests
         const get = bent('GET', 'https://node-testnet.vechain.energy', 'json')
         const post = bent('POST', 'https://node-testnet.vechain.energy', 'json')
@@ -74,7 +74,7 @@ var vechain_utils = {
         console.log('Submitted with txId', id)
     },
     
-    addEmissionsData : async function (){
+    addEmissionsData : async function (emissionsData){
     
     },
     

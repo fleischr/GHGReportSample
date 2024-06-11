@@ -11,7 +11,19 @@ module.exports = cds.service.impl(async function() {
     this.on('tokenizeEmissions', async(req) =>{
         console.log("tokenizing emissions");
         const { emissionsID } = req.data;
-        await vechain_utils.mintEmissionsNFT();
+
+        if (emissionsID) {
+            try {
+                const result = await cds.transaction(req).run(
+                    SELECT.from(MyEntity).where({ ID })
+                );
+                return result.length > 0 ? result[0] : null; // return the entity or null if not found
+                await vechain_utils.mintEmissionsNFT(result);
+            } catch (error) {
+                req.error(404, `Entry with ID ${ID} not found`);
+            }
+        }
+        
         return emissionsID;
     });
     this.on('requestScope3Verification', async(req) =>{

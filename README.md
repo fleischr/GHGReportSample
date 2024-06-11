@@ -23,3 +23,8 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
+
+
+## Recommended add-ons
+
+Need to get your SAP BTP dev environment set up locally? Try the <a href="https://github.com/fleischr/sapbtp_dev_readiness">Batman test</a>

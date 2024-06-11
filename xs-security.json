@@ -1,43 +1,43 @@
 {
   "scopes": [
     {
-      "name" : "$XSAPPNAME.GHGAppAdmin",
-      "description" : "AppAdmin"
+      "name": "$XSAPPNAME.GHGAppAdmin",
+      "description": "AppAdmin"
     },
     {
-      "name" : "$XSAPPNAME.GHGDataSteward",
-      "description" : "DataSteward"
+      "name": "$XSAPPNAME.GHGDataSteward",
+      "description": "DataSteward"
     },
     {
-      "name" : "$XSAPPNAME.GHGDataViewer",
-      "description" : "DataViewer"
+      "name": "$XSAPPNAME.GHGDataViewer",
+      "description": "DataViewer"
     }
   ],
   "attributes": [],
   "role-templates": [
     {
-      "name" : "GHGAppAdmin",
-      "description" : "",
-      "scope-references" : [
+      "name": "GHGAppAdmin",
+      "description": "",
+      "scope-references": [
         "$XSAPPNAME.GHGAppAdmin"
       ],
-      "attribute-references" : []
+      "attribute-references": []
     },
     {
-      "name" : "GHGDataSteward",
-      "description" : "",
-      "scope-references" : [
+      "name": "GHGDataSteward",
+      "description": "",
+      "scope-references": [
         "$XSAPPNAME.GHGDataSteward"
       ],
-      "attribute-references" : []
+      "attribute-references": []
     },
     {
-      "name" : "GHGDataViewer",
-      "description" : "",
-      "scope-references" : [
+      "name": "GHGDataViewer",
+      "description": "",
+      "scope-references": [
         "$XSAPPNAME.GHGDataViewer"
       ],
-      "attribute-references" : []
+      "attribute-references": []
     }
   ]
 }

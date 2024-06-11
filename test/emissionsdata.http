@@ -1,0 +1,23 @@
+@server=http://localhost:4004
+@service=/emissionsdata
+
+####
+GET {{server}}{{service}}/CarbonEmissions
+
+####
+POST {{server}}{{service}}/CarbonEmissions
+Content-Type: application/json
+
+{
+    "ID" : 999,
+    "ObjectType" : "TEST",
+    "ObjectKey" : "TEST100",
+    "CO2eAmount" : 1.000,
+    "UnitOfMeasure" : "MT",
+    "EmissionsFrom" : "2023-01-01T00:00:01Z",
+    "EmissionsTo" : "2023-12-31T12:59:59Z",
+    "GHGOrgID" :  "A100"
+}
+
+####
+GET {{server}}{{service}}/tokenizeEmissions

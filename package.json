@@ -6,20 +6,24 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^6",
+    "@sap/cds": "^7",
+    "@sap/xssec": "^3",
     "bent": "^7.3.12",
+    "cds-swagger-ui-express": "^0.8.0",
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1",
     "express": "^4",
     "fs": "^0.0.1-security",
-    "thor-devkit": "^2.0.9",
-    "@sap/xssec": "^3",
+    "hdb": "^0.19.0",
     "passport": "^0",
-    "hdb": "^0.19.0"
+    "thor-devkit": "^2.0.9"
   },
   "devDependencies": {
     "@sap-cloud-sdk/openapi-generator": "^3.12.0",
     "@sap/ux-specification": "^1.120.5",
+    "@sap/ux-ui5-tooling": "^1.13.2",
+    "@ui5/cli": "^3.9.2",
+    "fiori-tools": "^1.1.8",
     "sqlite3": "^5.0.4",
     "yamljs": "^0.3.0"
   },
@@ -28,7 +32,7 @@
     "watch-emissionsdatalist": "cds watch --open emissionsdatalist/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
-    "node": "^16.15"
+    "node": "^20.0"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",

@@ -1,0 +1,22 @@
+name: SAP BTP deploy CI
+
+on:
+    push:
+        branches:
+            main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
