@@ -23,13 +23,17 @@
     "@sap/ux-specification": "^1.120.5",
     "@sap/ux-ui5-tooling": "^1.13.2",
     "@ui5/cli": "^3.9.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "fiori-tools": "^1.1.8",
+    "prettier": "^3.3.2",
     "sqlite3": "^5.0.4",
     "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "cds run",
-    "watch-emissionsdatalist": "cds watch --open emissionsdatalist/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-emissionsdatalist": "cds watch --open emissionsdatalist/webapp/index.html?sap-ui-xx-viewCache=false",
+    "lint": "eslint 'src/**/*.ts' --fix"
   },
   "engines": {
     "node": "^20.0"

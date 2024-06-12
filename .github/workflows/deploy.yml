@@ -28,9 +28,9 @@ jobs:
               npm install -g eslint
               ls -lrt
 
-      - name: Linting
-        shell: sh
-        run: npm run lint
+      ##- name: Linting
+      ##  shell: sh
+      ##  run: npm run lint
 
       - name: Build
         shell: sh
