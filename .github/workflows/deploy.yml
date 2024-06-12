@@ -1,4 +1,4 @@
-name: SAP BTP deploy CI
+name: SAP BTP build and deploy CI
 
 on:
     push:
@@ -11,12 +11,27 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'  # Specify your Node.js version
 
       - name: Install dependencies
         run: npm install
+
+      - name: Add cds build tooling
+        run:  npm i -g @sap/cds-dk
+              npm install -g mbt
+              npm init -y          
+              npm install -g eslint
+              ls -lrt
+
+      - name: Linting
+        shell: sh
+        run: npm run lint
+
+      - name: Build
+        shell: sh
+        run: mbt build 
