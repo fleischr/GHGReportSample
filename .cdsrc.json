@@ -1,1 +1,8 @@
-{}
+{
+    "swagger": {
+        "basePath": "/$api-docs", 
+        "apiPath": "", 
+        "diagram": true, 
+        "odataVersion": "4.0" 
+    }
+}

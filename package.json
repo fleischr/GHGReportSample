@@ -7,9 +7,11 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
     "@sap/xssec": "^3",
     "bent": "^7.3.12",
     "cds-swagger-ui-express": "^0.8.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1",
     "express": "^4",
